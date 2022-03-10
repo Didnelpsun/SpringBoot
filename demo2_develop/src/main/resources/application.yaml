@@ -1,0 +1,31 @@
+user:
+  id: 1
+  name: Didnelpsun
+  birthday: 2022/3/10
+  sex: true
+  primeAccount:
+    id: 1
+    name: 黄金账户 \n 测试
+    userid: 1
+    money: 10040.54
+  interests:
+    - 动漫
+    - 小说
+  accounts:
+    - id: 1
+      name: 黄金账户
+      userid: 1
+      money: 10040.54
+    - id: 2
+      name: 白银账户
+      userid: 1
+      money: 225.95
+    - id: 3
+      name: 钻石账户
+      userid: 1
+      money: 7466.72
+  scores:
+    Englist: 78.5
+    Politics: 80.0
+    Math: 135.0
+    Computer: 140.5
