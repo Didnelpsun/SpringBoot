@@ -6,5 +6,12 @@
 </head>
 <body>
   <h3>主页面</h3>
+  <form method="post" enctype="multipart/form-data">
+      头像：<input type="file" name="file"><br>
+      <input type="submit" value="上传头像">
+  </form>
 </body>
+<script>
+    document.getElementsByTagName("form")[0].action=window.document.location.href+"upload"
+</script>
 </html>
