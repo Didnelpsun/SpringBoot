@@ -31,6 +31,30 @@ user:
     Computer: 140.5
 
 spring:
+  datasource:
+    druid:
+      # 开启监控和防火墙
+      filters: stat,wall
+      aop-patterns:
+        - org.didnelpsun.boot.*
+      # 开启监控页
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: root
+        # 必须开启这个运行才能使用
+        allow: ""
+      # 开启web监控过滤器
+      web-stat-filter:
+        enabled: true
+        urlPattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*ico,/druid/*'
+
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver_class_name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
       # 设置单个文件大小
@@ -39,3 +63,11 @@ spring:
       # 设置单次请求文件的总大小
       max-request-size:
         50MB
+
+mybatis:
+#  config-location: classpath:mybatis.xml
+  mapper-locations:
+    - classpath:dao/*.xml
+  # 配置了configuration就不能配置config-location来指定配置文件，否则会冲突
+  configuration:
+    map-underscore-to-camel-case: true

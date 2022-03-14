@@ -13,8 +13,9 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
-        User user = (User) applicationContext.getBean("user");
-        System.out.println(user);
+//        User user = (User) applicationContext.getBean("user");
+//        System.out.println(user);
+
     }
 
 }
