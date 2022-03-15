@@ -1,0 +1,31 @@
+spring:
+  # 环境配置
+  profiles:
+    active: dev
+---
+# 不能有重复的键，所以用横线分割
+# 开发环境
+spring:
+  profiles: dev
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
+  # Swagger需要开启ant风格的路径匹配
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+---
+# 生产环境
+spring:
+  profiles: prod
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
+

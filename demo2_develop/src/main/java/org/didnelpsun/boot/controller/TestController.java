@@ -1,13 +1,15 @@
 // TestController
 package org.didnelpsun.boot.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.didnelpsun.boot.bean.User;
 import org.didnelpsun.boot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -48,12 +50,52 @@ public class TestController {
         else
             return "文件为空！";
     }
-    @RequestMapping("/allUser")
-    public List<User> allUser(){
-        return userService.selectAllUsers();
+    @GetMapping("/selectAllUsers")
+    public List<User> selectAllUsers(){
+//        return userService.selectAllUsers();
+        return userService.list();
     }
-    @RequestMapping("/user/{id}")
-    public User user(@PathVariable Integer id){
-        return userService.selectUser(id);
+    // 通用查询，如果传入的值可以转为数字就是根据ID，否则使用模糊查询
+    @RequestMapping("/user/{query}")
+    public List<User> selectUsers(@PathVariable String query){
+        try {
+            return List.of(userService.getById(Integer.valueOf(query)));
+        }
+        catch (NumberFormatException e){
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+            // 第一个参数：该参数是一个布尔类型，只有该参数是true时，才将like条件拼接到sql中；本例中，如果name字段不为空，则拼接name字段的like查询条件；
+            // 第二个参数：该参数是数据库中的字段名；
+            // 第三个参数：该参数值字段值；
+            queryWrapper.like(StringUtils.isNotBlank(query), "name", query);
+            return userService.list(queryWrapper);
+        }
+        catch (NullPointerException e){
+            return null;
+        }
+    }
+    @PostMapping ("/user")
+    public Boolean insertUser(User user){
+        return userService.save(user);
+    }
+    @PutMapping ("/user")
+    public Boolean updateUser(User user){
+        return userService.updateById(user);
+    }
+    @DeleteMapping("/user/{id}")
+    public Boolean deleteUser(@PathVariable Integer id){
+        return userService.removeById(id);
+    }
+    @RequestMapping("/user/getUsersSum")
+    public long getUsersSum(){
+        return userService.count();
+    }
+    // 参数为当前查询页码
+    @GetMapping("/selectAllUsers/{page}")
+    public List<User> selectAllUsersByPage(@PathVariable Integer page){
+        // 泛型为数据操作对象
+        // 创建有两个参数，第一个是当前页面页码，第二个是页面大小
+        Page<User> userPage = new Page<>(page,10);
+        // page的第一个参数为Page对象，对分页的页面进行配置，第二个参数为查询条件
+        return userService.page(userPage, null).getRecords();
     }
 }
