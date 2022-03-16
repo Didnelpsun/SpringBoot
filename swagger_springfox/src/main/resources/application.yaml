@@ -1,0 +1,48 @@
+spring:
+  # 环境配置
+  profiles:
+    active: dev
+  # Swagger需要开启ant风格的路径匹配
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+---
+# 不能有重复的键，所以用横线分割
+# 开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
+# Swagger配置
+# 只在Swagger启用时生效
+swagger:
+  version: "0.0"
+  termsOfServiceUrl: "https://didnelpsun.github.io"
+  name: "Didnelpsun"
+  url: "https://didnelpsun.github.io"
+  email: "didnelpsun@163.com"
+  license: ""
+  licenseUrl: ""
+---
+# 生产环境
+spring:
+  config:
+    activate:
+      on-profile: prod
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
+# 关闭Swagger视图，使用swagger.enable=false是无效的，那是Swagger2的设置方式
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: false

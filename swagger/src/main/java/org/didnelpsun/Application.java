@@ -1,4 +1,3 @@
-// Application.java
 package org.didnelpsun;
 
 import org.springframework.boot.SpringApplication;
