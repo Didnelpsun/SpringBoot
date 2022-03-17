@@ -6,6 +6,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data
+    username: root
+    password: root
 ---
 # 不能有重复的键，所以用横线分割
 # 开发环境
@@ -13,12 +19,6 @@ spring:
   config:
     activate:
       on-profile: dev
-  # 数据库配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/data
-    username: root
-    password: root
 # Swagger配置
 # 只在Swagger启用时生效
 swagger:
@@ -35,12 +35,6 @@ spring:
   config:
     activate:
       on-profile: prod
-  # 数据库配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/data
-    username: root
-    password: root
 # 关闭Swagger视图，使用swagger.enable=false是无效的，那是Swagger2的设置方式
 springfox:
   documentation:
